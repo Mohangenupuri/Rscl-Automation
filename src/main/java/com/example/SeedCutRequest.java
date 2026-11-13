@@ -9,7 +9,7 @@ public class SeedCutRequest {
     public static void main(String[] args) {
 
         try (Playwright playwright = Playwright.create();
-             Scanner scanner = new Scanner(System.in)) {
+             Scanner scanner = new Scanner(System.in)) {  
 
             Browser browser = playwright.chromium().launch(
                 new BrowserType.LaunchOptions().setHeadless(false)
