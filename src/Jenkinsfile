@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    stages {
+        stage('Compile & Run Playwright') {
+            steps {
+                dir('C:\\Users\\MOHAN-~1\\OneDrive\\PlaywrightJava') {
+                    bat '.\\apache-maven-3.10.0\\bin\\mvn -f PlaywrightJava\\pom.xml clean compile'
+                    bat '.\\apache-maven-3.10.0\\bin\\mvn -f PlaywrightJava\\pom.xml exec:java -Dexec.mainClass="com.example.SeedDiversionOut"'
+                }
+            }
+        }
+    }
+}
