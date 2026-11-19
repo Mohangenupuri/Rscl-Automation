@@ -91,7 +91,6 @@ public class SeedCutRequest {
 
             page.locator("//select[@id='pestOrDisease']")
             .selectOption(new SelectOption().setLabel("No"));
-            
             System.out.println("Pest or Disease selected: No");
 
             page.locator("//button[@type='submit']").click();
