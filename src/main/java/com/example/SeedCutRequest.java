@@ -38,7 +38,7 @@ public class SeedCutRequest {
             loginButton.click();
             System.out.println("Login button clicked");
 
-            page.locator("//*[@id='auth-form']/div[2]/button").click(); 
+            page.locator("//*[@id='auth-form']/div[2]/button").click();
             System.out.println("Authenticate button clicked successfully");
 
             page.locator("//a[normalize-space()='Cane FI']").first().click();
@@ -51,11 +51,11 @@ public class SeedCutRequest {
             page.locator("//button[@aria-label='Choose date']//*[name()='svg']").click();
             System.out.println("Calendar icon clicked successfully");
 
-            page.locator("//button[normalize-space()='4']").click();
+            page.locator("//button[normalize-space()='4']").click();   
             System.out.println("Date Selected successfully");
 
-            page.locator("//div[@id='plotNo_property']//div[contains(@class,'space-lookup')]//div[2]//*[name()='svg']").click(); 
-            System.out.println("Plot No lookup icon clicked");
+            page.locator("//div[@id='plotNo_property']//div[contains(@class,'space-lookup')]//div[2]//*[name()='svg']").click();
+            System.out.println("Plot No icon clicked");
 
             page.locator("//button[normalize-space()='Find']").click();
             System.out.println("Find button clicked successfully");
@@ -72,7 +72,7 @@ public class SeedCutRequest {
             page.locator("//button[normalize-space()='Find']").click();
             System.out.println("Seed Type Find button clicked");
 
-            page.locator("//td[contains(@data-name,'SEED_CODE-SBS')]").click();
+            page.locator("//tbody/tr[1]/td[1]").click();
             System.out.println("Seed Code selected successfully");
 
             page.locator("//select[@id='fitOrUnfit']")
