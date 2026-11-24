@@ -17,7 +17,7 @@ public class SeedCutRequest {
             Page page = context.newPage();
 
             // Set default timeout to 30 seconds
-            page.setDefaultTimeout(30000);
+            page.setDefaultTimeout(50000);
 
             page.navigate("https://cmserpdev.rscl.in/login-page");
             System.out.println("Page title: " + page.title());
