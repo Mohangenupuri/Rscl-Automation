@@ -3,22 +3,23 @@ package com.example;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.SelectOption;
 
-import java.util.Scanner;
-
 public class SeedCutRequest {
     public static void main(String[] args) {
 
-        try (Playwright playwright = Playwright.create();
-             Scanner scanner = new Scanner(System.in)) {  
+        try (Playwright playwright = Playwright.create()) {
 
+            // Headless set to true for smooth execution in Jenkins
             Browser browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
+                new BrowserType.LaunchOptions().setHeadless(true)
             );
 
-            Page page = browser.newPage();
+            BrowserContext context = browser.newContext();
+            Page page = context.newPage();
+
+            // Set default timeout to 30 seconds
+            page.setDefaultTimeout(30000);
 
             page.navigate("https://cmserpdev.rscl.in/login-page");
-
             System.out.println("Page title: " + page.title());
 
             Locator username = page.locator("//input[@name='USERNAME']");
@@ -42,9 +43,7 @@ public class SeedCutRequest {
             System.out.println("Authenticate button clicked successfully");
 
             page.locator("//a[normalize-space()='Cane FI']").first().click();
-
             page.locator("//a[normalize-space()='Seed']").click();
-
             page.locator("//a[normalize-space()='Seed Cut Request']").click();
             System.out.println("Seed Cut Request clicked successfully");
 
@@ -76,31 +75,38 @@ public class SeedCutRequest {
             System.out.println("Seed Code selected successfully");
 
             page.locator("//select[@id='fitOrUnfit']")
-            .selectOption(new SelectOption().setLabel("Yes"));
-
+                .selectOption(new SelectOption().setLabel("Yes"));
             System.out.println("Fit or Unfit selected: Yes");
 
             page.locator("//input[@id='purity']").fill("80");
             System.out.println("Purity entered: 80");
 
-            page.locator("//select[@id='caneGirth']").selectOption(
-            new SelectOption().setLabel("Thick"));
+            page.locator("//select[@id='caneGirth']")
+                .selectOption(new SelectOption().setLabel("Thick"));
+            System.out.println("Cane Girth selected: Thick");
 
             page.locator("//input[@id='thinCane']").fill("70");
             System.out.println("Thin Cane entered: 70");
 
             page.locator("//select[@id='pestOrDisease']")
-            .selectOption(new SelectOption().setLabel("No"));
+                .selectOption(new SelectOption().setLabel("No"));
             System.out.println("Pest or Disease selected: No");
 
             page.locator("//button[@type='submit']").click();
             System.out.println("Submit button clicked successfully");
 
-            System.out.println("Press Enter to close browser.");
-
-            scanner.nextLine();
+            // Wait 3 seconds to ensure form submission completes before closing
+            page.waitForTimeout(3000);
 
             browser.close();
+            System.out.println("Execution completed successfully!");
+
+        } catch (Exception e) {
+            System.err.println("Automation Failed: " + e.getMessage());
+            e.printStackTrace();
+            // Exit with non-zero code so Jenkins marks the build as FAILURE
+            System.exit(1);
         }
     }
-} 
+}
+
