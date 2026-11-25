@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('1. Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Mohangenupuri/Rscl-Automation.git'
+            }
+        }
+        stage('2. Build & Compile') {
+            steps {
+                bat 'mvn clean compile'
+            }
+        }
+        stage('3. Run SeedCutRequest') {
+            steps {
+                bat 'mvn exec:java -Dexec.mainClass="com.example.SeedCutRequest"'
+            }
+        }
+    }
+}
