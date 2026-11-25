@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Arrays;
 import com.microsoft.playwright.*;
 import com.microsoft.playwright.options.SelectOption;
 
@@ -8,15 +9,20 @@ public class SeedCutRequest {
 
         try (Playwright playwright = Playwright.create()) {
 
-            // Headless set to true for smooth execution in Jenkins
+            // Headless false = Browser open aagi live-ah theriyum
             Browser browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(true)
+                new BrowserType.LaunchOptions()
+                    .setHeadless(false)
+                    .setSlowMo(500) // Ovvoru step-um clear-ah theriya 0.5 sec delay
+                    .setArgs(Arrays.asList("--start-maximized"))
             );
 
-            BrowserContext context = browser.newContext();
+            BrowserContext context = browser.newContext(
+                new Browser.NewContextOptions().setViewportSize(null)
+            );
             Page page = context.newPage();
 
-            // Set default timeout to 30 seconds
+            // Set default timeout to 50 seconds
             page.setDefaultTimeout(50000);
 
             page.navigate("https://cmserpdev.rscl.in/login-page");
@@ -76,7 +82,7 @@ public class SeedCutRequest {
 
             page.locator("//select[@id='fitOrUnfit']")
                 .selectOption(new SelectOption().setLabel("Yes"));
-            System.out.println("Fit or Unfit selected: Yes");
+            System.out.println("Fit or Unfit selected: Yes");   
 
             page.locator("//input[@id='purity']").fill("80");
             System.out.println("Purity entered: 80");
@@ -109,4 +115,3 @@ public class SeedCutRequest {
         }
     }
 }
-
